@@ -121,7 +121,8 @@ ggplot(shootings_by_race,aes(reorder(race, -n), n))+
   geom_bar(stat = "identity")+
   labs(title = "Mass shootings in the United States (1982-2019)",
          x = "Race of perpetrator",
-         y = "Number of incidents") 
+         y = "Number of incidents") +
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
@@ -134,7 +135,8 @@ ggplot(mass_shootings)+
   geom_boxplot(aes(location_type, total_victims))+
   labs(title = "Mass shootings in the United States (1982-2019)",
        x = "Type of location of incident", 
-       y = "Total number of victims")
+       y = "Total number of victims")+
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
@@ -148,7 +150,8 @@ filter(mass_shootings, case != "Las Vegas Strip massacre") %>%
   labs(title = "Mass shootings in the United States (1982-2019)",
        subtitle = "Omitting Las Vegas Strip massacre (2017)",
        x = "Type of location of incident", 
-       y = "Total number of victims")
+       y = "Total number of victims")+
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
@@ -186,7 +189,8 @@ mass_shootings %>%
   geom_bar()+
   labs(title = "Mass shootings in the United States (1982-2019)",
        x = "Month",
-       y = "Number of mass shootings") 
+       y = "Number of mass shootings") +
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
@@ -210,7 +214,8 @@ mass_shootings %>%
         color = "Race") +
   
 #To show the graph in approriate scale, move legend to the bottom
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom")+
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
@@ -231,7 +236,8 @@ mass_shootings %>%
   geom_boxplot()+
   labs(title = "Mass shootings in the United States (1982-2019)",
         x = "Evidence of prior mental illness by perpetrator",
-        y = "Number of total victims")
+        y = "Number of total victims")+
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
@@ -248,7 +254,8 @@ mass_shootings %>%
   geom_count()+
   labs(title = "Mass shootings in the United States (1982-2019)",
         x = "Race of perpetrator",
-        y = "Evidence of prior mental illness by perpetrator")
+        y = "Evidence of prior mental illness by perpetrator")+
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
@@ -267,7 +274,8 @@ mass_shootings %>%
         x = "Evidence of prior mental illness by perpetrator",
         y = "Number of total victims",
         fill = "Race")+
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom")+
+  theme_minimal()
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
