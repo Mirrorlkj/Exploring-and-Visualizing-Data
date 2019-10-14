@@ -1,6 +1,6 @@
 ---
 title: "Exploring Mass Shootings in America"
-author: "Benjamin Soltoff"
+author: "Kejing Li"
 output: github_document
 ---
 
@@ -18,49 +18,171 @@ library(rcfss)
 # load the data
 data("mass_shootings")
 mass_shootings
+
+# generate an excel to get a better overview of the data
+write_excel_csv(mass_shootings,"mass_shootings.excel")
 ```
+
 
 ## Generate a data frame that summarizes the number of mass shootings per year. Print the data frame as a formatted `kable()` table.
 
 ```{r}
+#Count the number of mass shootings by year 
+shootings_by_year <- mass_shootings %>% count(year)
 
+#Print the data frame as a formatted kable() table.
+kable(shootings_by_year, 
+      col.names = c("Year", "Number of mass shootings"), 
+      caption =  "Mass shootings in the United States (1982-2019)")
 ```
 
 ## Generate a bar chart that identifies the number of mass shooters associated with each race category. The bars should be sorted from highest to lowest.
 
 ```{r}
+#count the number of mass shootings by race and filter out the NA value
+shootings_by_race <- mass_shootings %>% 
+  count(race) %>%
+  filter(!is.na(race))
 
+#draw the bar graph
+#reoder from highest to lowest
+#change the default stat to identity to map the y value
+ggplot(shootings_by_race,aes(reorder(race, -n), n))+
+  geom_bar(stat = "identity")+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+         x = "Race of perpetrator",
+         y = "Number of incidents") 
 ```
+
+
 
 ## Generate a boxplot visualizing the number of total victims, by type of location. Redraw the same plot, but remove the Las Vegas Strip massacre from the dataset.
 
 ```{r}
+#Use boxplot to map a categorical and a continuous variable
+ggplot(mass_shootings)+
+  geom_boxplot(aes(location_type, total_victims))+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+       x = "Type of location of incident", 
+       y = "Total number of victims")
+```
 
+
+
+```{r}
+# The above graph is not so imformative beacause of one evident outlier 
+# Here, that outlier has been removed by 'filter()' function
+filter(mass_shootings, case != "Las Vegas Strip massacre") %>%
+  ggplot(aes(location_type, total_victims))+
+  geom_boxplot()+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+       subtitle = "Omitting Las Vegas Strip massacre (2017)",
+       x = "Type of location of incident", 
+       y = "Total number of victims")
 ```
 
 ## How many white males with prior signs of mental illness initiated a mass shooting after 2000?
 
 ```{r}
-
+#Use 'filter()' to filter out the described criteria 
+#Summarize the number after filtering 
+mass_shootings %>%
+  filter(race == "White", 
+         male == "TRUE",
+         prior_mental_illness == "Yes",
+         year > 2000) %>%
+  summarise(n())
+  
 ```
+
+__Answer:__ 20 white males with prior signs of mental illness initiated a mass shooting after 2000.
 
 ## Which month of the year has the most mass shootings? Generate a bar chart sorted in chronological order to provide evidence of your answer.
 
 ```{r}
+#Convert "month" column into an ordered factor
+mass_shootings$month <- factor(mass_shootings$month, month.abb, ordered=TRUE)
 
+#Draw the bar graph
+mass_shootings %>%
+  ggplot(aes(month))+
+  geom_bar()+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+       x = "Month",
+       y = "Number of mass shootings") 
 ```
+
+__Answer:__ As shown above, Feb. and Jun. have the most mass shootings.
+
 
 ## How does the distribution of mass shooting fatalities differ between white and black shooters? What about white and latino shooters?
 
-```{r}
 
+```{r}
+#Filter out the 3 races concerned
+mass_shootings %>%
+  filter(race %in% c("White", "Black","Latino") ) %>%
+  
+#It's hard to see the difference in distribution because the number of incidents differ so much
+#Display density to standardize so that the area under each frequency polygen is one
+  ggplot(aes(fatalities, ..density.., color = race))+ 
+  geom_freqpoly(binwidth = 2)+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+        x = "Number of fatalities per incident",
+        y = "Number of incidents in propotion",
+        color = "Race") +
+  
+#To show the graph in approriate scale, move legend to the bottom
+  theme(legend.position = "bottom")
 ```
+
+__Answer:__  Generally, the White shooters cause larger number of fatalities than the other 2 races and its variance is also the highest. In contrast, number of fatalities of Latino shooters are lowest among three.
 
 ## Are mass shootings with shooters suffering from mental illness different from mass shootings with no signs of mental illness in the shooter? Assess the relationship between mental illness and total victims, mental illness and race, and the intersection of all three variables.
 
-```{r}
+### Mental illness and total victims
 
+```{r}
+mass_shootings %>%
+  filter(!is.na(prior_mental_illness)) %>%
+  ggplot(aes(prior_mental_illness, total_victims))+ 
+  geom_boxplot()+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+        x = "Evidence of prior mental illness by perpetrator",
+        y = "Number of total victims")
 ```
+
+__Conclusion:__ Most mass shootings are commited by those with prior mental illness. 
+
+### Mental illness and race
+
+```{r}
+mass_shootings %>%
+  filter(!is.na(race), !is.na(prior_mental_illness)) %>%
+  ggplot(aes(race, prior_mental_illness))+ 
+  geom_count()+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+        x = "Race of perpetrator",
+        y = "Evidence of prior mental illness by perpetrator")
+```
+
+__Conclusion:__ White perpetrators with evidence of prior illness is the largest subgroup among all the subgroups.  
+
+### Intersection of mental illness, race and totoal number of victims 
+
+```{r}
+mass_shootings %>%
+  filter(!is.na(prior_mental_illness), !is.na(race) ) %>%
+  ggplot(aes(prior_mental_illness, total_victims, fill = race))+ 
+  geom_boxplot()+
+  labs(title = "Mass shootings in the United States (1982-2019)",
+        x = "Evidence of prior mental illness by perpetrator",
+        y = "Number of total victims",
+        fill = "Race")+
+  theme(legend.position = "bottom")
+```
+
+__Conclusion:__ Most perpetrators have evidence of prior mental illness in all races. 
 
 ## Session info
 
