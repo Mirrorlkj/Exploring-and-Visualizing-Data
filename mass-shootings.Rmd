@@ -4,7 +4,7 @@ author: "Kejing Li"
 output: github_document
 ---
 
-## Get the data
+## Get the data 
 
 ```{r, echo = TRUE}
 library(tidyverse)    # load tidyverse packages, including ggplot2
