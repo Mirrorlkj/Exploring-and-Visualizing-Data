@@ -8,14 +8,14 @@ Kejing Li
 library(tidyverse)    # load tidyverse packages, including ggplot2
 ```
 
-    ## -- Attaching packages --------------------------------------- tidyverse 1.2.1 --
+    ## -- Attaching packages -------------------------------------------- tidyverse 1.2.1 --
 
     ## v ggplot2 3.2.1     v purrr   0.3.2
     ## v tibble  2.1.3     v dplyr   0.8.3
     ## v tidyr   1.0.0     v stringr 1.4.0
     ## v readr   1.3.1     v forcats 0.4.0
 
-    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+    ## -- Conflicts ----------------------------------------------- tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -741,7 +741,7 @@ mass_shootings$month <- factor(mass_shootings$month, month.abb, ordered=TRUE)
 #Draw the bar graph
 mass_shootings %>%
   ggplot(aes(month))+
-  geom_bar()+
+  geom_bar(fill = "deepskyblue4")+
   labs(title = "Mass shootings in the United States (1982-2019)",
        x = "Month",
        y = "Number of mass shootings") +
