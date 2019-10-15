@@ -8,14 +8,14 @@ Kejing Li
 library(tidyverse)    # load tidyverse packages, including ggplot2
 ```
 
-    ## -- Attaching packages ------------------------------------------------------ tidyverse 1.2.1 --
+    ## -- Attaching packages --------------------------------------- tidyverse 1.2.1 --
 
     ## v ggplot2 3.2.1     v purrr   0.3.2
     ## v tibble  2.1.3     v dplyr   0.8.3
     ## v tidyr   1.0.0     v stringr 1.4.0
     ## v readr   1.3.1     v forcats 0.4.0
 
-    ## -- Conflicts --------------------------------------------------------- tidyverse_conflicts() --
+    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -63,48 +63,603 @@ shootings_by_year <- mass_shootings %>% count(year)
 #Print the data frame as a formatted kable() table.
 kable(shootings_by_year, 
       col.names = c("Year", "Number of mass shootings"), 
-      caption =  "Mass shootings in the United States (1982-2019)")
+      caption =  "Mass shootings in the United States (1982-2019)",
+      format = "html")
 ```
 
-| Year | Number of mass shootings |
-| ---: | -----------------------: |
-| 1982 |                        1 |
-| 1984 |                        2 |
-| 1986 |                        1 |
-| 1987 |                        1 |
-| 1988 |                        1 |
-| 1989 |                        2 |
-| 1990 |                        1 |
-| 1991 |                        3 |
-| 1992 |                        2 |
-| 1993 |                        4 |
-| 1994 |                        1 |
-| 1995 |                        1 |
-| 1996 |                        1 |
-| 1997 |                        2 |
-| 1998 |                        3 |
-| 1999 |                        5 |
-| 2000 |                        1 |
-| 2001 |                        1 |
-| 2003 |                        1 |
-| 2004 |                        1 |
-| 2005 |                        2 |
-| 2006 |                        3 |
-| 2007 |                        4 |
-| 2008 |                        3 |
-| 2009 |                        4 |
-| 2010 |                        1 |
-| 2011 |                        3 |
-| 2012 |                        7 |
-| 2013 |                        5 |
-| 2014 |                        4 |
-| 2015 |                        7 |
-| 2016 |                        6 |
-| 2017 |                       11 |
-| 2018 |                       12 |
-| 2019 |                        7 |
+<table>
+
+<caption>
 
 Mass shootings in the United States (1982-2019)
+
+</caption>
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+Year
+
+</th>
+
+<th style="text-align:right;">
+
+Number of mass shootings
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+1982
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1984
+
+</td>
+
+<td style="text-align:right;">
+
+2
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1986
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1987
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1988
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1989
+
+</td>
+
+<td style="text-align:right;">
+
+2
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1990
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1991
+
+</td>
+
+<td style="text-align:right;">
+
+3
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1992
+
+</td>
+
+<td style="text-align:right;">
+
+2
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1993
+
+</td>
+
+<td style="text-align:right;">
+
+4
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1994
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1995
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1996
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1997
+
+</td>
+
+<td style="text-align:right;">
+
+2
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1998
+
+</td>
+
+<td style="text-align:right;">
+
+3
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+1999
+
+</td>
+
+<td style="text-align:right;">
+
+5
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2000
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2001
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2003
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2004
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2005
+
+</td>
+
+<td style="text-align:right;">
+
+2
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2006
+
+</td>
+
+<td style="text-align:right;">
+
+3
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2007
+
+</td>
+
+<td style="text-align:right;">
+
+4
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2008
+
+</td>
+
+<td style="text-align:right;">
+
+3
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2009
+
+</td>
+
+<td style="text-align:right;">
+
+4
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2010
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2011
+
+</td>
+
+<td style="text-align:right;">
+
+3
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2012
+
+</td>
+
+<td style="text-align:right;">
+
+7
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2013
+
+</td>
+
+<td style="text-align:right;">
+
+5
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2014
+
+</td>
+
+<td style="text-align:right;">
+
+4
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2015
+
+</td>
+
+<td style="text-align:right;">
+
+7
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2016
+
+</td>
+
+<td style="text-align:right;">
+
+6
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2017
+
+</td>
+
+<td style="text-align:right;">
+
+11
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2018
+
+</td>
+
+<td style="text-align:right;">
+
+12
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:right;">
+
+2019
+
+</td>
+
+<td style="text-align:right;">
+
+7
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 ## Generate a bar chart that identifies the number of mass shooters associated with each race category. The bars should be sorted from highest to lowest.
 
@@ -166,13 +721,13 @@ mass_shootings %>%
          male == "TRUE",
          prior_mental_illness == "Yes",
          year > 2000) %>%
-  summarise(n())
+  summarise(Number = n())
 ```
 
     ## # A tibble: 1 x 1
-    ##   `n()`
-    ##   <int>
-    ## 1    20
+    ##   Number
+    ##    <int>
+    ## 1     20
 
 **Answer:** 20 white males with prior signs of mental illness initiated
 a mass shooting after 2000.
@@ -214,8 +769,7 @@ mass_shootings %>%
         color = "Race") +
   
 #To show the graph in approriate scale, move legend to the bottom
-  theme(legend.position = "bottom")+
-  theme_minimal()
+  theme(legend.position = "bottom")
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
@@ -251,10 +805,16 @@ mental illness.
 mass_shootings %>%
   filter(!is.na(race), !is.na(prior_mental_illness)) %>%
   ggplot(aes(race, prior_mental_illness))+ 
-  geom_count()+
+  #color points by their occurance
+  geom_count(aes(color = ..n.., size = ..n..))+
+  #combine the 2 legends into one legend with colorized points,
+  #to dispaly it as legend instead of a seperate colorbar
+    guides(color = "legend")+
   labs(title = "Mass shootings in the United States (1982-2019)",
         x = "Race of perpetrator",
-        y = "Evidence of prior mental illness by perpetrator")+
+        y = "Evidence of prior mental illness by perpetrator",
+        size = "Number",
+        color = "Number")+
   theme_minimal()
 ```
 
@@ -268,14 +828,15 @@ largest subgroup among all the subgroups.
 ``` r
 mass_shootings %>%
   filter(!is.na(prior_mental_illness), !is.na(race) ) %>%
-  ggplot(aes(prior_mental_illness, total_victims, fill = race))+ 
+  ggplot(aes(race, total_victims, fill = prior_mental_illness))+ 
   geom_boxplot()+
+  #filp to show full race name
+  coord_flip()+
   labs(title = "Mass shootings in the United States (1982-2019)",
-        x = "Evidence of prior mental illness by perpetrator",
+        x = "Race",
         y = "Number of total victims",
-        fill = "Race")+
-  theme(legend.position = "bottom")+
-  theme_minimal()
+        fill = "Evidence of prior mental illness by perpetrator")+
+  theme(legend.position = "bottom")
 ```
 
 ![](mass-shootings_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->

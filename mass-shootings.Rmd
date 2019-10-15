@@ -33,7 +33,8 @@ shootings_by_year <- mass_shootings %>% count(year)
 #Print the data frame as a formatted kable() table.
 kable(shootings_by_year, 
       col.names = c("Year", "Number of mass shootings"), 
-      caption =  "Mass shootings in the United States (1982-2019)")
+      caption =  "Mass shootings in the United States (1982-2019)",
+      format = "html")
 ```
 
 ## Generate a bar chart that identifies the number of mass shooters associated with each race category. The bars should be sorted from highest to lowest.
@@ -94,8 +95,8 @@ mass_shootings %>%
          male == "TRUE",
          prior_mental_illness == "Yes",
          year > 2000) %>%
-  summarise(n())
-  
+  summarise(Number = n())
+   
 ```
 
 __Answer:__ 20 white males with prior signs of mental illness initiated a mass shooting after 2000.
@@ -109,7 +110,7 @@ mass_shootings$month <- factor(mass_shootings$month, month.abb, ordered=TRUE)
 #Draw the bar graph
 mass_shootings %>%
   ggplot(aes(month))+
-  geom_bar()+
+  geom_bar(fill = "deepskyblue4")+
   labs(title = "Mass shootings in the United States (1982-2019)",
        x = "Month",
        y = "Number of mass shootings") +
@@ -137,8 +138,7 @@ mass_shootings %>%
         color = "Race") +
   
 #To show the graph in approriate scale, move legend to the bottom
-  theme(legend.position = "bottom")+
-  theme_minimal()
+  theme(legend.position = "bottom")
 ```
 
 __Answer:__  Generally, the White shooters cause larger number of fatalities than the other 2 races and its variance is also the highest. In contrast, number of fatalities of Latino shooters are lowest among three.
@@ -166,10 +166,16 @@ __Conclusion:__ Most mass shootings are commited by those with prior mental illn
 mass_shootings %>%
   filter(!is.na(race), !is.na(prior_mental_illness)) %>%
   ggplot(aes(race, prior_mental_illness))+ 
-  geom_count()+
+  #color points by their occurance
+  geom_count(aes(color = ..n.., size = ..n..))+
+  #combine the 2 legends into one legend with colorized points,
+  #to dispaly it as legend instead of a seperate colorbar
+    guides(color = "legend")+
   labs(title = "Mass shootings in the United States (1982-2019)",
         x = "Race of perpetrator",
-        y = "Evidence of prior mental illness by perpetrator")+
+        y = "Evidence of prior mental illness by perpetrator",
+        size = "Number",
+        color = "Number")+
   theme_minimal()
 ```
 
@@ -180,14 +186,15 @@ __Conclusion:__ White perpetrators with evidence of prior illness is the largest
 ```{r}
 mass_shootings %>%
   filter(!is.na(prior_mental_illness), !is.na(race) ) %>%
-  ggplot(aes(prior_mental_illness, total_victims, fill = race))+ 
+  ggplot(aes(race, total_victims, fill = prior_mental_illness))+ 
   geom_boxplot()+
+  #filp to show full race name
+  coord_flip()+
   labs(title = "Mass shootings in the United States (1982-2019)",
-        x = "Evidence of prior mental illness by perpetrator",
+        x = "Race",
         y = "Number of total victims",
-        fill = "Race")+
-  theme(legend.position = "bottom")+
-  theme_minimal()
+        fill = "Evidence of prior mental illness by perpetrator")+
+  theme(legend.position = "bottom")
 ```
 
 __Conclusion:__ Most perpetrators have evidence of prior mental illness in all races. 
